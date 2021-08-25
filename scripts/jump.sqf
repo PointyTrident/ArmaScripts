@@ -1,6 +1,6 @@
 // =====================================================================================================================
 // Author: PointTrident
-// Description: Replaces the default get over action with contextual jump which will vault while moving or climb 
+// Description: Replaces the default get over action with contextual jump which will vault while moving or climb
 // medium/tall objects using different vanilla animations.
 // Usage: Add this script to the player's init: `execVm "scripts\jump.sqf"`
 // =====================================================================================================================
@@ -20,8 +20,9 @@ findDisplay 46 displayAddEventHandler ["keydown", {
                 _obstacles = lineIntersectsSurfaces [AGLtoASL (player modelToWorld [0, 0, _height]), AGLtoASL (player modelToWorld [0, 1.5, _height]), player, objNull, true, -1, "GEOM", "VIEW"];
                 if(count _obstacles > 0) then {
                     height + 0.05;
-                    _tooTall = lineIntersectsSurfaces [AGLtoASL (player modelToWorld [0, 1.2, _height + 0.05]), AGLtoASL (player modelToWorld [0, 1.2, _height + 1.8]), player, objNull, true, -1, "GEOM", "VIEW"];
-                    if(count _tooTall == 0) then { _climbHeight = _height };
+                    _no_roof = lineIntersectsSurfaces [AGLtoASL (player modelToWorld [0, 0, 1]), AGLtoASL (player modelToWorld [0, 0, _height + 1]), player, objNull, true, -1, "GEOM", "VIEW"];
+                    _no_space = lineIntersectsSurfaces [AGLtoASL (player modelToWorld [0, 1.2, _height + 0.05]), AGLtoASL (player modelToWorld [0, 1.2, _height + 1.8]), player, objNull, true, -1, "GEOM", "VIEW"];
+                    if(count _no_space == 0 && count _no_roof == 0) then { _climbHeight = _height };
                     break;
                 };
             };
