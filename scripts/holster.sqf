@@ -2,7 +2,7 @@
 // Author: PointTrident
 // Description: Allows the player to holster their weapon by hitting 4 on the keyboard.
 // Usage: Add to the player's init: `execVm "scripts\holster.sqf"`
-// TODO: Sling over left sholder (if you dont have a launcher) allowing players to carry two primaries 
+// TODO: Sling over left shoulder (if you dont have a launcher) allowing players to carry two primaries 
 // =====================================================================================================================
 
 // Only players past this point
