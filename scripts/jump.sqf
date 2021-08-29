@@ -17,12 +17,12 @@ findDisplay 46 displayAddEventHandler ["keydown", {
             // Climb check
             _climbHeight = -1;
             for [{_height = 2.5}, {_height >= 0.5}, {_height = _height - 0.05}] do {
-                _obstacles = lineIntersectsSurfaces [AGLtoASL (player modelToWorld [0, 0, _height]), AGLtoASL (player modelToWorld [0, 1.5, _height]), player, objNull, true, -1, "GEOM", "VIEW"];
+                _obstacles = lineIntersectsSurfaces [AGLtoASL (player modelToWorld [0, 0, _height]), AGLtoASL (player modelToWorld [0, 1.2, _height]), player, objNull, true, -1, "GEOM", "VIEW"];
                 if(count _obstacles > 0) then {
-                    height + 0.05;
-                    _no_roof = lineIntersectsSurfaces [AGLtoASL (player modelToWorld [0, 0, 1]), AGLtoASL (player modelToWorld [0, 0, _height + 1]), player, objNull, true, -1, "GEOM", "VIEW"];
-                    _no_space = lineIntersectsSurfaces [AGLtoASL (player modelToWorld [0, 1.2, _height + 0.05]), AGLtoASL (player modelToWorld [0, 1.2, _height + 1.8]), player, objNull, true, -1, "GEOM", "VIEW"];
-                    if(count _no_space == 0 && count _no_roof == 0) then { _climbHeight = _height };
+                    height = height + 0.05;
+                    _roof_check = lineIntersectsSurfaces [AGLtoASL (player modelToWorld [0, 0, 1]), AGLtoASL (player modelToWorld [0, 0, _height + 1]), player, objNull, true, -1, "GEOM", "VIEW"];
+                    _room_check = lineIntersectsSurfaces [AGLtoASL (player modelToWorld [0, 0, _height]), AGLtoASL (player modelToWorld [0, 1.2, _height + 1.8]), player, objNull, true, -1, "GEOM", "VIEW"];
+                    if(count _roof_check == 0 && count _room_check == 0) then { _climbHeight = _height };
                     break;
                 };
             };
@@ -34,15 +34,18 @@ findDisplay 46 displayAddEventHandler ["keydown", {
                 _finished = [0, 1.2, _climbHeight];
                 if(_climbHeight > 1.8) then { // Climb higher
                     _animation = "GetInHemttBack";
-                    _offset = [0, -0.5, _climbHeight - 2];
+                    _offset = [0, -0.5, _climbHeight - 1.7];
                     _finished = [0, 1.5, _climbHeight];
                 };
                 player action ["SwitchWeapon", player, player, -1]; // Animation only works with weapon away :(
+                player forceWalk true; // Stop player from moving too much during animation
                 [player, _animation] remoteExec ["switchMove", 0];
                 player setPos (player modelToWorld _offset);
-                [_climbHeight, _animation, _finished] spawn {
-                    params ["_height", "_animation", "_finished"];
+                [_animation, _finished] spawn {
+                    sleep 0.2; // Gives a sec for the animation to catch up
+                    params ["_animation", "_finished"];
                     waitUntil { animationState player != _animation };
+                    player forceWalk false;
                     player setPos (player modelToWorld _finished);
                     player setVariable["jumping", nil];
                 };
