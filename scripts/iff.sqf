@@ -18,13 +18,12 @@ PT_fnc_iff_setup = {
                 _iffDevice = _spawnType createVehicle [0,0,0];
                 _iffDevice attachTo [player, [-0.045, 0, 0.3], "Head"];
                 if (_spawnType == '#lightpoint') then {
-                    _iffDevice setLightColor [0.25, 0.25, 0.25];
+                    _iffDevice setLightColor [0.5, 0.5, 0.5];
                     _iffDevice setLightAmbient [0, 0, 0];
-                    _iffDevice setLightIntensity 0.25;
+                    _iffDevice setLightIntensity 4;
                     _iffDevice setLightUseFlare true;
                     _iffDevice setLightFlareSize 2.5;
                     _iffDevice setLightFlareMaxDistance 3000;
-                    _iffDevice setLightBrightness 0.1;
                     _iffDevice setLightDayLight true;
                     _iffDevice setLightIR true;
                 };
