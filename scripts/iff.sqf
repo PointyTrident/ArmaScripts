@@ -16,9 +16,9 @@ PT_fnc_iff_setup = {
             _iffDevice = player getVariable [format["iff_%1", _type], objNull];
             if (isNull _iffDevice) then {
                 _iffDevice = _spawnType createVehicle [0,0,0];
-                _iffDevice attachTo [player, [-0.045, 0, 0.3], "Head"];
+                _iffDevice attachTo [player, [-0.05, -0.1, 0.3], "Head", true];
                 if (_spawnType == '#lightpoint') then {
-                    _iffDevice setLightColor [0.5, 0.5, 0.5];
+                    _iffDevice setLightColor [0.75, 0.75, 0.75];
                     _iffDevice setLightAmbient [0, 0, 0];
                     _iffDevice setLightIntensity 4;
                     _iffDevice setLightUseFlare true;
